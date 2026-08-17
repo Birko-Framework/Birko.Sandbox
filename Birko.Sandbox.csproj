@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Birko.Sandbox</RootNamespace>
+  </PropertyGroup>
+
+  <!-- NuGet packages required by the imported Birko.* shared projects. -->
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+  </ItemGroup>
+
+  <!-- Lean projitems closure: ONLY what the smoke harness exercises (this is a consumer,
+       not the all-projects compile gate — that's Birko.Framework). $(BirkoSrc) resolves to
+       the Birko\Framework bucket (see Directory.Build.props). -->
+
+  <!-- Stores / InMemory. Birko.Data.Stores transitively imports Birko.Contracts + Birko.Configuration;
+       Birko.Time (below) transitively imports Birko.Time.Abstractions. -->
+  <Import Project="$(BirkoSrc)\Birko.Data.Core\Birko.Data.Core.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.Stores\Birko.Data.Stores.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.InMemory\Birko.Data.InMemory.projitems" Label="Shared" />
+
+  <!-- Serialization (Newtonsoft). -->
+  <Import Project="$(BirkoSrc)\Birko.Serialization\Birko.Serialization.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Serialization.Newtonsoft\Birko.Serialization.Newtonsoft.projitems" Label="Shared" />
+
+  <!-- Workflow (build + run). -->
+  <Import Project="$(BirkoSrc)\Birko.Workflow\Birko.Workflow.projitems" Label="Shared" />
+
+  <!-- Background jobs (base has an InMemoryJobQueue — no persistence backend needed for the smoke). -->
+  <Import Project="$(BirkoSrc)\Birko.Time\Birko.Time.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.BackgroundJobs\Birko.BackgroundJobs.projitems" Label="Shared" />
+
+  <!-- AI (provider/agent wiring via the factories — zero-dep contracts, no live call). -->
+  <Import Project="$(BirkoSrc)\Birko.AI.Contracts\Birko.AI.Contracts.projitems" Label="Shared" />
+
+</Project>

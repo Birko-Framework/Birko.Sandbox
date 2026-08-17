@@ -1,0 +1,14 @@
+<Project>
+  <PropertyGroup>
+    <!-- Root of the Birko.* shared-project checkouts (the Birko\Framework bucket).
+         Consumed by Birko.Sandbox.csproj which Imports $(BirkoSrc)\Birko.X\*.projitems.
+         Resolution order:
+           1. /p:BirkoSrc=...      MSBuild CLI parameter (highest priority)
+           2. BIRKO_SRC env var    Shell environment (CI / Docker / custom layouts)
+           3. Default              The Birko\Framework checkout relative to this repo.
+         This repo lives at C:\Source\Birko\Consumers\Birko.Sandbox and the framework at
+         C:\Source\Birko\Framework, so the default resolves ..\..\Framework. -->
+    <BirkoSrc Condition="'$(BirkoSrc)' == '' and '$(BIRKO_SRC)' != ''">$(BIRKO_SRC)</BirkoSrc>
+    <BirkoSrc Condition="'$(BirkoSrc)' == ''">$(MSBuildThisFileDirectory)..\..\Framework</BirkoSrc>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,16 @@
+## .NET build output
+bin/
+obj/
+*.user
+
+## IDE / editor
+.vs/
+.vscode/
+.idea/
+
+## Sandbox scratch — the smoke harness writes throwaway files (JSON stores, job state) here
+_scratch/
+
+## OS
+Thumbs.db
+.DS_Store
