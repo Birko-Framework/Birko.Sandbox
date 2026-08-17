@@ -22,7 +22,6 @@
   <ItemGroup>
     <!-- Microsoft.Extensions.* packages are provided by the Microsoft.AspNetCore.App FrameworkReference -->
     <!-- Additional packages not in shared projects -->
-    <PackageReference Include="NEST" Version="7.17.5" />
     <PackageReference Include="Elasticsearch.Net" Version="7.17.5" />
     <PackageReference Include="System.IO.Ports" Version="10.0.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
