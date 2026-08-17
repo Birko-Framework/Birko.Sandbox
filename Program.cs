@@ -171,9 +171,9 @@ internal sealed class SandboxLlmProvider : ILlmProvider
     public string Name => "sandbox-stub";
     public Action<string, string>? MessageCallback { get; set; }
 
-    public Task<LlmResponse> SendMessageAsync(List<Message> messages, List<Tool> tools, string systemPrompt)
+    public Task<LlmResponse> SendMessageAsync(List<Message> messages, List<Tool> tools, string systemPrompt, CancellationToken cancellationToken = default)
         => throw new NotSupportedException("smoke harness — no live LLM calls");
 
-    public Task<LlmStreamingResponse> SendMessageStreamingAsync(List<Message> messages, List<Tool> tools, string systemPrompt)
+    public Task<LlmStreamingResponse> SendMessageStreamingAsync(List<Message> messages, List<Tool> tools, string systemPrompt, CancellationToken cancellationToken = default)
         => throw new NotSupportedException("smoke harness — no live LLM calls");
 }
