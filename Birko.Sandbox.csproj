@@ -8,6 +8,18 @@
     <RootNamespace>Birko.Sandbox</RootNamespace>
   </PropertyGroup>
 
+  <!-- The compile-gate aggregator is a SEPARATE project living in a subdirectory of this one, so
+       this app's implicit **/*.cs glob reaches it. That is harmless until the aggregator has been
+       built: its obj/ then holds a generated AssemblyInfo.cs, which this project compiles as its own
+       source and the build fails with CS0579 duplicate-attribute errors. Invisible for as long as
+       nobody built both in one tree - which is exactly what the CI harness step now does every run.
+       The SDK's default excludes only cover THIS project's own obj/ and bin/. -->
+  <ItemGroup>
+    <Compile Remove="Birko.Framework/**" />
+    <None Remove="Birko.Framework/**" />
+    <EmbeddedResource Remove="Birko.Framework/**" />
+  </ItemGroup>
+
   <!-- Lean projitems closure: ONLY what the smoke harness exercises (this is a consumer,
        not the all-projects compile gate — that's Birko.Framework). $(BirkoSrc) resolves to
        the Birko\Framework bucket (see Directory.Build.props). -->
