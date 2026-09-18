@@ -8,11 +8,6 @@
     <RootNamespace>Birko.Sandbox</RootNamespace>
   </PropertyGroup>
 
-  <!-- NuGet packages required by the imported Birko.* shared projects. -->
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
-  </ItemGroup>
-
   <!-- Lean projitems closure: ONLY what the smoke harness exercises (this is a consumer,
        not the all-projects compile gate — that's Birko.Framework). $(BirkoSrc) resolves to
        the Birko\Framework bucket (see Directory.Build.props). -->
@@ -36,5 +31,64 @@
 
   <!-- AI (provider/agent wiring via the factories — zero-dep contracts, no live call). -->
   <Import Project="$(BirkoSrc)\Birko.AI.Contracts\Birko.AI.Contracts.projitems" Label="Shared" />
+
+  <!-- SQL stores, via SQLite so no server is needed.
+
+       This is the one closure that is NOT lean, and it is worth knowing why before trying to trim
+       it: Birko.Data.SQL reaches Models (ValueData), Data.ViewModel (the repository bases),
+       Data.Patterns (FieldDescriptor / index contracts), Rules (the condition converter) and
+       Data.SQL.ViewModel (DataBaseRepository), each of which pulls its own. Removing any one of
+       these does not compile. The rest of the harness stays deliberately lean; the SQL layer simply
+       costs what it costs, and covering the framework's most-used storage path is worth it. -->
+  <Import Project="$(BirkoSrc)\Birko.Models.Contracts\Birko.Models.Contracts.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Models\Birko.Models.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.Patterns\Birko.Data.Patterns.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.Repositories\Birko.Data.Repositories.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.ViewModel\Birko.Data.ViewModel.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Rules\Birko.Rules.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Helpers\Birko.Helpers.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.SQL\Birko.Data.SQL.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.SQL.View\Birko.Data.SQL.View.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.SQL.ViewModel\Birko.Data.SQL.ViewModel.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.SQL.SqLite\Birko.Data.SQL.SqLite.projitems" Label="Shared" />
+
+  <!-- The three server providers, for the wiring checks only. Nothing is contacted: the checks
+       assert that each settings type still composes a connection string and still carries the shape
+       its store expects, which is what breaks when the framework moves under a consumer. Each brings
+       its own driver package. -->
+  <Import Project="$(BirkoSrc)\Birko.Data.SQL.PostgreSQL\Birko.Data.SQL.PostgreSQL.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.SQL.MySQL\Birko.Data.SQL.MySQL.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.SQL.MSSql\Birko.Data.SQL.MSSql.projitems" Label="Shared" />
+
+  <!-- File-backed stores. No server, no driver - the reference implementations for file storage. -->
+  <Import Project="$(BirkoSrc)\Birko.Data.JSON\Birko.Data.JSON.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.XML\Birko.Data.XML.projitems" Label="Shared" />
+
+  <!-- Migrations, run against the same SQLite file the store checks use. -->
+  <Import Project="$(BirkoSrc)\Birko.Data.Migrations\Birko.Data.Migrations.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.Migrations.SQL\Birko.Data.Migrations.SQL.projitems" Label="Shared" />
+
+  <!-- Store decorators + tagging + multi-tenancy. -->
+  <Import Project="$(BirkoSrc)\Birko.Data.EventSourcing\Birko.Data.EventSourcing.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.Composition\Birko.Data.Composition.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.Tagging\Birko.Data.Tagging.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.Tenant\Birko.Data.Tenant.projitems" Label="Shared" />
+
+  <!-- Caching (in-memory tier only - the Redis tier needs a server). -->
+  <Import Project="$(BirkoSrc)\Birko.Caching\Birko.Caching.projitems" Label="Shared" />
+
+  <!-- Health checks. -->
+  <Import Project="$(BirkoSrc)\Birko.Health\Birko.Health.projitems" Label="Shared" />
+
+  <!-- Communication. REST and GraphQL are HttpClient-only, so the client wiring is checkable with
+       no server; the transports that need one (gRPC, SSE, WebSocket, SOAP) are covered by the
+       framework's own live suites. -->
+  <Import Project="$(BirkoSrc)\Birko.Communication\Birko.Communication.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Communication.REST\Birko.Communication.REST.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Communication.GraphQL\Birko.Communication.GraphQL.projitems" Label="Shared" />
+
+  <!-- Security (password hashing — no server, no secrets store). -->
+  <Import Project="$(BirkoSrc)\Birko.Security\Birko.Security.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Security.BCrypt\Birko.Security.BCrypt.projitems" Label="Shared" />
 
 </Project>
