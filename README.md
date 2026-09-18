@@ -14,13 +14,13 @@ projects are independent: this one (the harness) runs a lean slice; that one onl
 
 ## What it checks
 
-25 checks across every layer a console consumer can reach. Each constructs settings → store or
+26 checks across every layer a console consumer can reach. Each constructs settings → store or
 service → does a small round-trip and asserts the result.
 
 | Group | Checks |
 |---|---|
 | `core` | settings identity, date-time provider, Newtonsoft round-trip, `Money` value object |
-| `data` | InMemory CRUD + bulk/filter delete, ordering + paging, JSON and XML file round-trips, SQLite CRUD, SQLite decimal precision, the whole-table-write refusal, a SQL migration, the decorator chain stamping from an injected clock, cache get/set/get-or-set |
+| `data` | InMemory CRUD + bulk/filter delete, ordering + paging, JSON and XML file round-trips, SQLite CRUD, SQLite decimal precision, the whole-table-write refusal, a SQL migration, the decorator chain stamping from an injected clock, cache get/set/get-or-set, tenant-scoped tagging |
 | `data (server-backed)` | PostgreSQL, MySQL and SQL Server settings compose a connection string |
 | `services` | workflow build + transition, background job enqueue/dequeue, health-check runner, AI provider factory |
 | `communication` | REST client wiring, GraphQL request building |

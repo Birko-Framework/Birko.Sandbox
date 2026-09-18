@@ -22,6 +22,7 @@ using Birko.Data.SQL.MySQL.Stores;
 using Birko.Data.SQL.PostgreSQL.Stores;
 using Birko.Data.SQL.Connectors;
 using Birko.Data.SQL.SqLite.Stores;
+using Birko.Data.Tagging;
 using Birko.Data.Tenant.Models;
 using Birko.Data.XML.Stores;
 using Birko.Health;
@@ -80,6 +81,7 @@ internal static class Program
         Check.Sync("data", "Migrations / SQL runner applies a version", DataMigrations),
         new Check("data", "Decorators / injected clock stamps rows", DataDecoratorsAsync),
         new Check("data", "Caching / get, set, get-or-set", DataCachingAsync),
+        new Check("data", "Tagging / tenant-stamped attach + detach", DataTaggingAsync),
 
         // ── data needing a server: wiring only ──────────────────────────────────────────────────
         Check.Sync("data (server-backed)", "PostgreSQL settings + connection string", () => SqlWiring("PostgreSQL")),
@@ -317,6 +319,40 @@ internal static class Program
         var second = await cache.GetOrSetAsync("lazy", _ => { calls++; return Task.FromResult(7); });
 
         return Outcome.From(calls == 1 && second == 7, $"factory ran {calls} times, expected 1");
+    }
+
+    private static async Task<Outcome> DataTaggingAsync()
+    {
+        // TagServiceBase owns the behaviour; a consumer supplies twelve data-access hooks. See
+        // SandboxTagService - writing one is what the README tells a reader to do, so this measures
+        // the framework rather than a stub.
+        var tenant = Guid.NewGuid();
+        var service = new SandboxTagService(tenant);
+
+        var tag = await service.CreateTagAsync("urgent", "#c00");
+        if (tag.Name != "urgent") return Outcome.Fail($"expected the tag 'urgent', got '{tag.Name}'");
+
+        // The base de-duplicates by name rather than creating a second row.
+        var again = await service.CreateTagAsync("urgent");
+        if (again.Id != tag.Id) return Outcome.Fail("creating the same tag twice produced two tags");
+
+        var asset = Guid.NewGuid();
+        await service.AttachTagAsync("Asset", asset, tag.Id);
+        var attached = await service.GetEntityTagsAsync("Asset", asset);
+        if (attached.Count != 1 || attached[0].Id != tag.Id)
+            return Outcome.Fail($"expected 1 tag on the entity, got {attached.Count}");
+
+        await service.DetachTagAsync("Asset", asset, tag.Id);
+        var afterDetach = await service.GetEntityTagsAsync("Asset", asset);
+        if (afterDetach.Count != 0) return Outcome.Fail("detach left the tag attached");
+
+        // A second tenant must not see the first one's tag. The base stamps TenantGuid on writes; the
+        // scoping of every read is the implementer's, which is the half worth checking from outside.
+        var other = new SandboxTagService(Guid.NewGuid());
+        var leaked = await other.ListTagsAsync();
+
+        return Outcome.From(leaked.Count == 0,
+            $"another tenant could see {leaked.Count} tag(s) that were not its own");
     }
 
     private static Outcome SqlWiring(string provider)
