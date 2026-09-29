@@ -334,15 +334,15 @@ internal static class Program
 
         // The base de-duplicates by name rather than creating a second row.
         var again = await service.CreateTagAsync("urgent");
-        if (again.Id != tag.Id) return Outcome.Fail("creating the same tag twice produced two tags");
+        if (again.Guid != tag.Guid) return Outcome.Fail("creating the same tag twice produced two tags");
 
         var asset = Guid.NewGuid();
-        await service.AttachTagAsync("Asset", asset, tag.Id);
+        await service.AttachTagAsync("Asset", asset, tag.Guid);
         var attached = await service.GetEntityTagsAsync("Asset", asset);
-        if (attached.Count != 1 || attached[0].Id != tag.Id)
+        if (attached.Count != 1 || attached[0].Guid != tag.Guid)
             return Outcome.Fail($"expected 1 tag on the entity, got {attached.Count}");
 
-        await service.DetachTagAsync("Asset", asset, tag.Id);
+        await service.DetachTagAsync("Asset", asset, tag.Guid);
         var afterDetach = await service.GetEntityTagsAsync("Asset", asset);
         if (afterDetach.Count != 0) return Outcome.Fail("detach left the tag attached");
 
@@ -398,10 +398,10 @@ internal static class Program
         if (jobId == Guid.Empty) return Outcome.Fail("enqueue returned no id");
 
         var dequeued = await queue.DequeueAsync();
-        if (dequeued?.Id != jobId) return Outcome.Fail("dequeued a different job");
+        if (dequeued?.Guid != jobId) return Outcome.Fail("dequeued a different job");
 
         SandboxJob.Ran = false;
-        await new SandboxJob().ExecuteAsync(new JobContext(dequeued.Id, 1, dequeued.EnqueuedAt));
+        await new SandboxJob().ExecuteAsync(new JobContext(dequeued.Guid, 1, dequeued.EnqueuedAt));
         await queue.CompleteAsync(jobId);
 
         return Outcome.From(SandboxJob.Ran, "the job did not execute");

@@ -75,7 +75,7 @@ public sealed class SandboxTagService : TagServiceBase
 
     protected override Task<IReadOnlyList<EntityTag>> GetEntityTagLinksAsync(string entityType, Guid entityId, CancellationToken ct)
         => Task.FromResult<IReadOnlyList<EntityTag>>(
-            OwnedLinks().Where(l => l.EntityType == entityType && l.EntityId == entityId).ToList());
+            OwnedLinks().Where(l => l.EntityType == entityType && l.EntityGuid == entityId).ToList());
 
     protected override Task CreateEntityTagAsync(EntityTag link, CancellationToken ct)
     {
@@ -91,7 +91,7 @@ public sealed class SandboxTagService : TagServiceBase
 
     protected override Task DeleteAllEntityTagsForTagAsync(Guid tagId, CancellationToken ct)
     {
-        foreach (var link in OwnedLinks().Where(l => l.TagId == tagId).ToList())
+        foreach (var link in OwnedLinks().Where(l => l.TagGuid == tagId).ToList())
         {
             _links.Delete(link);
         }
@@ -101,7 +101,7 @@ public sealed class SandboxTagService : TagServiceBase
     protected override Task<IReadOnlyList<EntityTag>> GetEntityTagLinksBatchAsync(
         string entityType, IReadOnlyList<Guid> entityIds, CancellationToken ct)
         => Task.FromResult<IReadOnlyList<EntityTag>>(
-            OwnedLinks().Where(l => l.EntityType == entityType && entityIds.Contains(l.EntityId)).ToList());
+            OwnedLinks().Where(l => l.EntityType == entityType && entityIds.Contains(l.EntityGuid)).ToList());
 
     // Every read and delete hook goes through these two: the tenant term is the implementer's
     // obligation, and putting it in one place per entity is what stops a hook forgetting it.
