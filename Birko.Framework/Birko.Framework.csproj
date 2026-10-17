@@ -248,6 +248,7 @@
   <Import Project="$(BirkoSrc)\Birko.Validation\Birko.Validation.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.BackgroundJobs\Birko.BackgroundJobs.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.BackgroundJobs.Hosting\Birko.BackgroundJobs.Hosting.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.BackgroundJobs.SQL\Birko.BackgroundJobs.SQL.projitems" Label="Shared" />
 
