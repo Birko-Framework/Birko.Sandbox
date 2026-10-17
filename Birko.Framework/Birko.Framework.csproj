@@ -339,6 +339,7 @@
   <Import Project="$(BirkoSrc)\Birko.AI.Agents\Birko.AI.Agents.projitems" Label="Shared" />
   <Import Project="$(BirkoSrc)\Birko.AI.Resilience\Birko.AI.Resilience.projitems" Label="Shared" />
   <Import Project="$(BirkoSrc)\Birko.AI.Resilience.Data\Birko.AI.Resilience.Data.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.VersionControl.Git\Birko.VersionControl.Git.projitems" Label="Shared" />
   <Import Project="$(BirkoSrc)\Birko.AI.Orchestration\Birko.AI.Orchestration.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Localization\Birko.Localization.projitems" Label="Shared" />
