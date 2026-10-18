@@ -47,6 +47,7 @@
 
   <Import Project="$(BirkoSrc)\Birko.Security.Jwt\Birko.Security.Jwt.projitems" Label="Shared" />
 
+  <Import Project="$(BirkoSrc)\Birko.Communication.AspNetCore\Birko.Communication.AspNetCore.projitems" Label="Shared" />
   <Import Project="$(BirkoSrc)\Birko.Security.AspNetCore\Birko.Security.AspNetCore.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Security.OAuth.Server\Birko.Security.OAuth.Server.projitems" Label="Shared" />
