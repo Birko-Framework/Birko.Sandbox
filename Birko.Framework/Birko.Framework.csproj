@@ -52,6 +52,7 @@
   <Import Project="$(BirkoSrc)\Birko.Security.OAuth.Server\Birko.Security.OAuth.Server.projitems" Label="Shared" />
   <Import Project="$(BirkoSrc)\Birko.Security.OAuth.Server.InMemory\Birko.Security.OAuth.Server.InMemory.projitems" Label="Shared" />
   <Import Project="$(BirkoSrc)\Birko.Security.OAuth.Server.SqLite\Birko.Security.OAuth.Server.SqLite.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Security.OAuth.Server.AspNetCore\Birko.Security.OAuth.Server.AspNetCore.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Security.Grants\Birko.Security.Grants.projitems" Label="Shared" />
 
@@ -72,6 +73,7 @@
   <Import Project="$(BirkoSrc)\Birko.Communication.SOAP\Birko.Communication.SOAP.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Communication.SSE\Birko.Communication.SSE.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Communication.SSE.AspNetCore\Birko.Communication.SSE.AspNetCore.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Communication.WebSocket\Birko.Communication.WebSocket.projitems" Label="Shared" />
 
