@@ -352,6 +352,7 @@
   <Import Project="$(BirkoSrc)\Birko.Localization.Data\Birko.Localization.Data.projitems" Label="Shared" />
   <Import Project="$(BirkoSrc)\Birko.Data.Localization\Birko.Data.Localization.projitems" Label="Shared" />
   <Import Project="$(BirkoSrc)\Birko.Data.Localization.SQL\Birko.Data.Localization.SQL.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.Localization.MongoDB\Birko.Data.Localization.MongoDB.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Data.SQL.Views\Birko.Data.SQL.Views.projitems" Label="Shared" />
   <Import Project="$(BirkoSrc)\Birko.Data.MongoDB.Views\Birko.Data.MongoDB.Views.projitems" Label="Shared" />
