@@ -72,6 +72,9 @@
   <Import Project="$(BirkoSrc)\Birko.Communication.REST.Server\Birko.Communication.REST.Server.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Communication.SOAP\Birko.Communication.SOAP.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Communication.GraphQL\Birko.Communication.GraphQL.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Communication.gRPC\Birko.Communication.gRPC.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Communication.gRPC.Server\Birko.Communication.gRPC.Server.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Communication.SSE\Birko.Communication.SSE.projitems" Label="Shared" />
   <Import Project="$(BirkoSrc)\Birko.Communication.SSE.AspNetCore\Birko.Communication.SSE.AspNetCore.projitems" Label="Shared" />
@@ -103,6 +106,7 @@
   <Import Project="$(BirkoSrc)\Birko.Data.ElasticSearch.ViewModel\Birko.Data.ElasticSearch.ViewModel.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Data.EventSourcing\Birko.Data.EventSourcing.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Data.EventSourcing.SQL\Birko.Data.EventSourcing.SQL.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Helpers\Birko.Helpers.projitems" Label="Shared" />
 
@@ -289,6 +293,7 @@
   <Import Project="$(BirkoSrc)\Birko.EventBus.Outbox.SQL\Birko.EventBus.Outbox.SQL.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.EventBus.EventSourcing\Birko.EventBus.EventSourcing.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.EventBus.Tenant\Birko.EventBus.Tenant.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Storage\Birko.Storage.projitems" Label="Shared" />
 
@@ -315,10 +320,14 @@
   <Import Project="$(BirkoSrc)\Birko.Health\Birko.Health.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Health.Data\Birko.Health.Data.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Health.Data.SQL\Birko.Health.Data.SQL.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Health.Data.ElasticSearch\Birko.Health.Data.ElasticSearch.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Health.Data.IndexManagement\Birko.Health.Data.IndexManagement.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Health.Redis\Birko.Health.Redis.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Health.Azure\Birko.Health.Azure.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Health.Security.Grants\Birko.Health.Security.Grants.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Rules\Birko.Rules.projitems" Label="Shared" />
 
@@ -331,6 +340,7 @@
   <Import Project="$(BirkoSrc)\Birko.Serialization.Newtonsoft\Birko.Serialization.Newtonsoft.projitems" Label="Shared" />
   <Import Project="$(BirkoSrc)\Birko.Serialization.MessagePack\Birko.Serialization.MessagePack.projitems" Label="Shared" />
   <Import Project="$(BirkoSrc)\Birko.Serialization.Protobuf\Birko.Serialization.Protobuf.projitems" Label="Shared" />
+  <Import Project="$(BirkoSrc)\Birko.Serialization.Yaml\Birko.Serialization.Yaml.projitems" Label="Shared" />
 
   <Import Project="$(BirkoSrc)\Birko.Workflow\Birko.Workflow.projitems" Label="Shared" />
   <Import Project="$(BirkoSrc)\Birko.Workflow.SQL\Birko.Workflow.SQL.projitems" Label="Shared" />
