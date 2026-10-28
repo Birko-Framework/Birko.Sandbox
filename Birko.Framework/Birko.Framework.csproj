@@ -90,6 +90,8 @@
 
   <Import Project="$(BirkoSrc)\Birko.Communication.OAuth.Providers\Birko.Communication.OAuth.Providers.projitems" Label="Shared" />
 
+  <Import Project="$(BirkoSrc)\Birko.Communication.OAuth.OpenIdConnect\Birko.Communication.OAuth.OpenIdConnect.projitems" Label="Shared" />
+
   <!-- Birko.Contracts and Birko.Configuration are transitively imported via Birko.Data.Stores.projitems -->
 
   <Import Project="$(BirkoSrc)\Birko.Data.Core\Birko.Data.Core.projitems" Label="Shared" />
